@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 
 public class HashTable {
-	
+
 	public void insert(ObjectWithCoordinates object){
 		//TODO
 	}

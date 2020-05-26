@@ -1,30 +1,57 @@
 
 public class AVLNode<T> {
+	private int key;
+	private int height;
+	private AVLNode<T> right;
+	private AVLNode<T> left;
+	private AVLNode<T> father;
+	private T data;
 
-	
+	AVLNode(int key, T data){
+		this.key = key;
+		this.data = data;
+		this.height = 0;
+		this.right = null;
+		this.left = null;
+		this.father = null;
+	}
+
 	public AVLNode<T> getLeftChild(){
-		//TODO
-		return null;
+		return this.left;
+	}
+	public void setLeftChild(AVLNode<T> x){
+		this.left = x;
 	}
 	
 	public AVLNode<T> getRightChild(){
-		//TODO
-		return null;
+		return this.right;
+	}
+	public void setRightChild(AVLNode<T> x){
+		this.right = x;
 	}
 	
 	public AVLNode<T> getFather(){
-		//TODO
-		return null;
+		return this.father;
+	}
+
+	public void setFather(AVLNode<T> x){
+		this.father = x;
 	}
 	
 	public int getKey(){
-		//TODO
-		return 0;
+		return this.key;
 	}
 	
 	public T getData(){
-		//TODO
-		return null;
+		return this.data;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 	
 	@Override
