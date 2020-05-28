@@ -219,17 +219,26 @@ public class AVL<T> {
         AVLNode<T> tmp = pathA.getLast(); // hold the a node or his previous
         int common_ancestor = pathA.peekFirst().getKey();
         while (tmp.getKey() != common_ancestor) {
-            allRange.add(tmp.getData());
-            addInorder(allRange, tmp.getRightChild());
+            if(tmp.getKey() >= pathA.getLast().getKey()) {
+                allRange.add(tmp.getData());
+                addInorder(allRange, tmp.getRightChild());
+            }
             tmp = tmp.getFather();
         }
 
         AVLNode<T> last = pathB.getLast();
         while (tmp.getKey() != last.getKey()) {
-            addInorder(allRange, tmp.getLeftChild());
-            allRange.add(tmp.getData());
+            if (tmp.getKey() == pathA.getFirst().getKey())
+                allRange.add(tmp.getData());
+            else if(tmp.getKey() <= pathB.getLast().getKey()) {
+                addInorder(allRange, tmp.getLeftChild());
+                allRange.add(tmp.getData());
+            }
             tmp = tmp.getRightChild();
         }
+        //add when reach end
+        addInorder(allRange, tmp.getLeftChild());
+        allRange.add(tmp.getData());
 
         Object[] finale = allRange.toArray(); //cast the linked list to array
         return finale;
