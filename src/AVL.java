@@ -203,7 +203,7 @@ public class AVL<T> {
     }
 
 
-    public Object[] range(int a, int b) {
+    public Object[] range(int a, int b) { // need to change צריך ללכת במסלול לפני הרשימה המקושרת!! לא כל הזמן רק ימינה או רק שמאלה!
         LinkedList<AVLNode<T>> pathA = new LinkedList<>();
         LinkedList<AVLNode<T>> pathB = new LinkedList<>();
         LinkedList<T> allRange = new LinkedList<>();

@@ -16,7 +16,7 @@ public class Tester {
 //        System.out.println(tree.getRoot().getLeftChild().getFather());
         System.out.println(tree.getRoot());
 
-        Object[] A = tree.range(10, 26);
+        Object[] A = tree.range(10, 23);
 
         for (Object o : A) {
             System.out.print(o + ", ");
