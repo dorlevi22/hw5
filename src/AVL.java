@@ -195,6 +195,7 @@ public class AVL<T> {
     }
 
     private void addInorder(LinkedList<T> list, AVLNode<T> node) {
+        /* add the sub-tree of a given node to a given linked_list in an inordered way*/
         if (node == null)
             return;
         addInorder(list, node.getLeftChild());
@@ -203,44 +204,44 @@ public class AVL<T> {
     }
 
 
-    public Object[] range(int a, int b) { // need to change צריך ללכת במסלול לפני הרשימה המקושרת!! לא כל הזמן רק ימינה או רק שמאלה!
-        LinkedList<AVLNode<T>> pathA = new LinkedList<>();
-        LinkedList<AVLNode<T>> pathB = new LinkedList<>();
-        LinkedList<T> allRange = new LinkedList<>();
-        pathTo(a, pathA);
-        pathTo(b, pathB);
+    public Object[] range(int a, int b) {
+        /* returns an array of the objects between key a and key b */
+        LinkedList<AVLNode<T>> pathA = new LinkedList<>(); // represents path from root to a
+        LinkedList<AVLNode<T>> pathB = new LinkedList<>(); // represents path from root to b
+        LinkedList<T> allRange = new LinkedList<>(); // will represents path from a to b
+        pathTo(a, pathA); // gives path from root to a
+        pathTo(b, pathB); // gives path from root to b
 
         // find the common father
-        while (pathA.get(1).equals(pathB.get(1))) {
-            pathA.remove();
+        // if one of the paths's size is 1 so he is the common father
+        while (pathA.size() > 1 && pathB.size() > 1 && pathA.get(1).equals(pathB.get(1))) {
+            pathA.remove(); // cut lists until the last common node
             pathB.remove();
         }
 
-        AVLNode<T> tmp = pathA.getLast(); // hold the a node or his previous
+        AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
         int common_ancestor = pathA.peekFirst().getKey();
+        // go up from tmp to the root and add necessary nodes to "allRange" list (the same way as pathA in reverse)
         while (tmp.getKey() != common_ancestor) {
-            if(tmp.getKey() >= pathA.getLast().getKey()) {
+            if(tmp.getKey() >= a) {
                 allRange.add(tmp.getData());
                 addInorder(allRange, tmp.getRightChild());
             }
             tmp = tmp.getFather();
         }
 
-        AVLNode<T> last = pathB.getLast();
-        while (tmp.getKey() != last.getKey()) {
-            if (tmp.getKey() == pathA.getFirst().getKey())
+        // go from common ancestor according to pathB
+        for (int i = 0; i < pathB.size(); i++) {
+            tmp = pathB.get(i);
+            if (tmp.getKey() == pathA.getFirst().getKey()) // the common ancestor
                 allRange.add(tmp.getData());
-            else if(tmp.getKey() <= pathB.getLast().getKey()) {
+            else if (tmp.getKey() <= b) {
                 addInorder(allRange, tmp.getLeftChild());
                 allRange.add(tmp.getData());
             }
-            tmp = tmp.getRightChild();
         }
-        //add when reach end
-        addInorder(allRange, tmp.getLeftChild());
-        allRange.add(tmp.getData());
 
-        Object[] finale = allRange.toArray(); //cast the linked list to array
+        Object[] finale = allRange.toArray(); // cast the linked list to an array
         return finale;
     }
 }

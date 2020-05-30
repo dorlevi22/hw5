@@ -13,13 +13,13 @@ public class Tester {
         tree.insert(1, "1");
         tree.insert(0, "0");
         tree.insert(6, "6");
-//        System.out.println(tree.getRoot().getLeftChild().getFather());
+
         System.out.println(tree.getRoot());
 
-        Object[] A = tree.range(10, 23);
+        Object[] A = tree.range(-1, 30);
 
-        for (Object o : A) {
-            System.out.print(o + ", ");
+        for (int i = 0; i < A.length; i++) {
+            System.out.print(A[i] + ", ");
         }
 
     }
