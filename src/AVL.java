@@ -195,7 +195,7 @@ public class AVL<T> {
     }
 
     private void addInorder(LinkedList<T> list, AVLNode<T> node) {
-        /* add the sub-tree of a given node to a given linked_list in an inordered way*/
+        /* add the sub-tree of a given node to a given linked_list in an inorder way */
         if (node == null)
             return;
         addInorder(list, node.getLeftChild());
@@ -219,11 +219,17 @@ public class AVL<T> {
             pathB.remove();
         }
 
-        AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
+        if (pathA.size() == 1 && pathB.size() == 1)
+        {
+            if ( pathA.get(0).getKey() < a || pathA.get(0).getKey() > b)
+                return new Object[]{};
+        }
+
+            AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
         int common_ancestor = pathA.peekFirst().getKey();
         // go up from tmp to the root and add necessary nodes to "allRange" list (the same way as pathA in reverse)
         while (tmp.getKey() != common_ancestor) {
-            if(tmp.getKey() >= a) {
+            if (tmp.getKey() >= a) {
                 allRange.add(tmp.getData());
                 addInorder(allRange, tmp.getRightChild());
             }
