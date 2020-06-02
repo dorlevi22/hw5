@@ -1,15 +1,16 @@
 import java.util.LinkedList;
 
 public class AVL<T> {
-
+    // fields
     private AVLNode<T> root;
 
+    //constructor
     AVL() {
         this.root = null;
     }
 
     public void insert(int key, T data) {
-        // key - the new key we will insert
+        // insert a new item to the tree, sort by key with data in it
         AVLNode<T> node_to_insert = new AVLNode<>(key, data);
         if (this.root == null) {
             this.root = node_to_insert;
@@ -175,10 +176,8 @@ public class AVL<T> {
         return this.root;
     }
 
-    /*
-    private func that create path from the root to the key
-     */
     private void pathTo(int key, LinkedList<AVLNode<T>> list) {
+         /* private func that create path from the root to the key */
         AVLNode<T> node = this.getRoot();
         while (node != null) {
             if (key > node.getKey()) {
@@ -203,9 +202,8 @@ public class AVL<T> {
         addInorder(list, node.getRightChild());
     }
 
-
     public Object[] range(int a, int b) {
-        /* returns an array of the objects between key a and key b */
+        /* returns an array of the objects between key 'a' and key 'b' */
         LinkedList<AVLNode<T>> pathA = new LinkedList<>(); // represents path from root to a
         LinkedList<AVLNode<T>> pathB = new LinkedList<>(); // represents path from root to b
         LinkedList<T> allRange = new LinkedList<>(); // will represents path from a to b
@@ -225,7 +223,7 @@ public class AVL<T> {
                 return new Object[]{};
         }
 
-            AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
+        AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
         int common_ancestor = pathA.peekFirst().getKey();
         // go up from tmp to the root and add necessary nodes to "allRange" list (the same way as pathA in reverse)
         while (tmp.getKey() != common_ancestor) {
