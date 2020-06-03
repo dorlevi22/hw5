@@ -16,13 +16,17 @@ public class StudentSolution implements MyInterface {
         Object[] X_range = AVL_X.range(Math.min(rightBottomX, leftTopX), Math.max(rightBottomX, leftTopX));
         Object[] Y_range = AVL_Y.range(Math.min(rightBottomY, leftTopY), Math.max(rightBottomY, leftTopY));
         LinkedList<Object> data = new LinkedList<>();
+        HashTable map = new HashTable(Y_range.length);
+
+        for (int i = 0; i < Y_range.length; i++) {
+                map.insert((Point)Y_range[i]);
+        }
 
         for (int i = 0; i < X_range.length; i++) {
-            for (int j = 0; j < Y_range.length; j++) {
-                if (X_range[i].equals(Y_range[j]))
-                    data.add(X_range[i]);
-            }
+            if(map.search(((Point)X_range[i]).getX(), ((Point)X_range[i]).getY()) != null)
+                data.add(X_range[i]);
         }
+
         //convert the linked list to string array
         String[] To_return = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {

@@ -22,7 +22,7 @@ public class HashTable {
         if (this.table[i] == null) { // if this cell is empty
             this.table[i] = new LinkedList<>();
         }
-        this.table[i].add(object); // add the new point to the right cell
+        this.table[i].addFirst(object); // add the new point to the right cell
     }
 
     public ObjectWithCoordinates search(int x, int y) {
