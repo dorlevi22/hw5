@@ -16,14 +16,16 @@ public class StudentSolution implements MyInterface {
         Object[] X_range = AVL_X.range(Math.min(rightBottomX, leftTopX), Math.max(rightBottomX, leftTopX));
         Object[] Y_range = AVL_Y.range(Math.min(rightBottomY, leftTopY), Math.max(rightBottomY, leftTopY));
         LinkedList<Object> data = new LinkedList<>();
+        if (Y_range.length == 0 || X_range.length == 0)
+            return new String[]{};
         HashTable map = new HashTable(Y_range.length);
 
         for (int i = 0; i < Y_range.length; i++) {
-                map.insert((Point)Y_range[i]);
+            map.insert((Point) Y_range[i]);
         }
 
         for (int i = 0; i < X_range.length; i++) {
-            if(map.search(((Point)X_range[i]).getX(), ((Point)X_range[i]).getY()) != null)
+            if (map.search(((Point) X_range[i]).getX(), ((Point) X_range[i]).getY()) != null)
                 data.add(X_range[i]);
         }
 
