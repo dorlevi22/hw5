@@ -1,4 +1,3 @@
-
 public class AVLNode<T> {
 
     // fields
@@ -80,4 +79,3 @@ public class AVLNode<T> {
         return s;
     }
 }
-
