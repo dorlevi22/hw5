@@ -10,29 +10,28 @@ import java.util.ArrayList;
 import java.awt.image.*;
 
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class GUI extends JFrame implements MyInterface{
-/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/////////////////////////////////////////////////////////////////////////
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class GUI extends JFrame implements MyInterface {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    /////////////////////////////////////////////////////////////////////////
 ////                   2 vars  - DONT TOUCH                          
 /////////////////////////////////////////////////////////////////////////
-	String fileName="db1.txt"; 
-	boolean withOutLoading=false;
-	
-	public void setWithOutLoading(boolean withOutLoading){
-		this.withOutLoading = withOutLoading; 
-	}
+    String fileName = "db1.txt";
+    boolean withOutLoading = false;
+
+    public void setWithOutLoading(boolean withOutLoading) {
+        this.withOutLoading = withOutLoading;
+    }
 
 
-
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////                    START GUI  - DONT TOUCH                          
 /////////////////////////////////////////////////////////////////////////
-	MyInterface studentSolution = new StudentSolution();
-	
+    MyInterface studentSolution = new StudentSolution();
+
     ImageIcon myImageIcon;
     JPanel mainPanel = new JPanel();
     JPanel inputListPanel = new JPanel();
@@ -58,20 +57,19 @@ public class GUI extends JFrame implements MyInterface{
 /////////////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////           Construct the application  - DONT TOUCH                          
 /////////////////////////////////////////////////////////////////////////
     public GUI() {
 
         try {
             jbInit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////           Main method    - DONT TOUCH                     
 /////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
@@ -82,14 +80,13 @@ public class GUI extends JFrame implements MyInterface{
             myGUI.setTitle("Assignment no. 5");
             myGUI.setVisible(true);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////           GUI method    - DONT TOUCH                     
 /////////////////////////////////////////////////////////////////////////
     private void jbInit() throws Exception {
@@ -146,10 +143,9 @@ public class GUI extends JFrame implements MyInterface{
         mainPanel.add(outputListPanel, BorderLayout.SOUTH);
         outputListPanel.add(outputListScrollPane, BorderLayout.CENTER);
     }
-    
-    
-    
-/////////////////////////////////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////////////////////////////
 ////           load Picture method    - DONT TOUCH                     
 /////////////////////////////////////////////////////////////////////////
     void loadPictureMenuItem_actionPerformed(ActionEvent e) {
@@ -166,22 +162,25 @@ public class GUI extends JFrame implements MyInterface{
     }
 
 
-
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////           load txt DB method    - DONT TOUCH                  
 /////////////////////////////////////////////////////////////////////////
     void loadTXTMenuItem_actionPerformed(ActionEvent e) {
-		try {
-    		BufferedReader input=null;
-    		int returnVal=0;
-    		JFileChooser fc=null;
-    		File file=null;
-    	
-    		if(withOutLoading){input = new BufferedReader(new FileReader(fileName));}
-    		else{fc = new JFileChooser();	returnVal = fc.showOpenDialog(this);}
-    	
-        	if (returnVal == JFileChooser.APPROVE_OPTION || withOutLoading) {
-            	if(!withOutLoading) file = fc.getSelectedFile();
+        try {
+            BufferedReader input = null;
+            int returnVal = 0;
+            JFileChooser fc = null;
+            File file = null;
+
+            if (withOutLoading) {
+                input = new BufferedReader(new FileReader(fileName));
+            } else {
+                fc = new JFileChooser();
+                returnVal = fc.showOpenDialog(this);
+            }
+
+            if (returnVal == JFileChooser.APPROVE_OPTION || withOutLoading) {
+                if (!withOutLoading) file = fc.getSelectedFile();
 
                 if (!withOutLoading) input = new BufferedReader(new FileReader(file));
                 String line = null;
@@ -195,69 +194,61 @@ public class GUI extends JFrame implements MyInterface{
                     objectX = Integer.parseInt(lineArray[1].split("=")[1]);
                     objectY = Integer.parseInt(lineArray[2].split("=")[1]);
                     inputPoints.add(line);
-                    
-                    insertDataFromDBFile (objectName, objectX, objectY);
 
-                 }           
-                updateInputList( inputPoints.toArray());
+                    insertDataFromDBFile(objectName, objectX, objectY);
+
+                }
+                updateInputList(inputPoints.toArray());
             }
             loadTXTMenuItem.setState(true);
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
 
-
-/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 ////           update the input List method    - DONT TOUCH                     
 /////////////////////////////////////////////////////////////////////////
-	public void updateInputList(Object[] inputPoints){
-		inputList = new JList(inputPoints);
+    public void updateInputList(Object[] inputPoints) {
+        inputList = new JList(inputPoints);
         inputListScrollPane = new JScrollPane(inputList);
         inputListScrollPane.setPreferredSize(new Dimension(140, 250));
         inputListPanel.remove(0);
         inputListPanel.add(inputListScrollPane, null);
         inputListPanel.repaint();
         setVisible(true);
-       // repaint();
-	}
-	
-/////////////////////////////////////////////////////////////////////////
+        // repaint();
+    }
+
+    /////////////////////////////////////////////////////////////////////////
 ////           update the output List method    - DONT TOUCH                     
 /////////////////////////////////////////////////////////////////////////
-	public void updateOutputList(String[] outputPoints){
-		outputList = new JList(outputPoints);
+    public void updateOutputList(String[] outputPoints) {
+        outputList = new JList(outputPoints);
         outputListScrollPane = new JScrollPane(outputList);
         outputListScrollPane.setPreferredSize(new Dimension(140, 250));
         outputListPanel.remove(0);
         outputListPanel.add(outputListScrollPane, null);
         outputListPanel.repaint();
         setVisible(true);
-	}
+    }
 
-	@Override
-	public String[] firstSolution(int leftTopX, int leftTopY, int rightBottomX, int rightBottomY) {
-		return studentSolution.firstSolution(leftTopX, leftTopY, rightBottomX, rightBottomY);
-	}
+    @Override
+    public String[] firstSolution(int leftTopX, int leftTopY, int rightBottomX, int rightBottomY) {
+        return studentSolution.firstSolution(leftTopX, leftTopY, rightBottomX, rightBottomY);
+    }
 
-	@Override
-	public String[] secondSolution(int leftTopX, int leftTopY,
-			int rightBottomX, int rightBottomY) {
-		return studentSolution.secondSolution(leftTopX, leftTopY, rightBottomX, rightBottomY);
-	}
+    @Override
+    public String[] secondSolution(int leftTopX, int leftTopY, int rightBottomX, int rightBottomY) {
+        return studentSolution.secondSolution(leftTopX, leftTopY, rightBottomX, rightBottomY);
+    }
 
-
-	
-	@Override
-	public void insertDataFromDBFile(String objectName, int objectX, int objectY) {
-		studentSolution.insertDataFromDBFile(objectName, objectX, objectY);
-	}
-
-
+    @Override
+    public void insertDataFromDBFile(String objectName, int objectX, int objectY) {
+        studentSolution.insertDataFromDBFile(objectName, objectX, objectY);
+    }
 }
-
 
 
 ////////////////////////////////////////////////////////////////
@@ -316,33 +307,52 @@ class PicturePanel extends JPanel implements MouseListener, MouseMotionListener 
         drawingNow = false;
         /// now we should calc the points that in range
         //   int (startX, startY) , (tmpX, tmpY);
-        if(myGUI.firstSolution.isSelected()) 
-        myGUI.updateOutputList(	myGUI.firstSolution(Math.min(startX,tmpX),Math.min(startY,tmpY),
-        		Math.max(startX,tmpX),Math.max(startY,tmpY)));
-        if(myGUI.secondSolution.isSelected())
-        myGUI.updateOutputList(myGUI.secondSolution(Math.min(startX,tmpX),Math.min(startY,tmpY),
-        		Math.max(startX,tmpX),Math.max(startY,tmpY)));
+        if (myGUI.firstSolution.isSelected())
+            myGUI.updateOutputList(myGUI.firstSolution(Math.min(startX, tmpX), Math.min(startY, tmpY),
+                    Math.max(startX, tmpX), Math.max(startY, tmpY)));
+        if (myGUI.secondSolution.isSelected())
+            myGUI.updateOutputList(myGUI.secondSolution(Math.min(startX, tmpX), Math.min(startY, tmpY),
+                    Math.max(startX, tmpX), Math.max(startY, tmpY)));
     }
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {}
-    public void mouseDragged(MouseEvent e) {repaint();tmpX = e.getX();tmpY = e.getY();}
-    public void mouseMoved(MouseEvent e) {}
-	public static BufferedImage getBufferedImage(String imageFile,Component c) {
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        repaint();
+        tmpX = e.getX();
+        tmpY = e.getY();
+    }
+
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    public static BufferedImage getBufferedImage(String imageFile, Component c) {
         Image image = c.getToolkit().getImage(imageFile);
         waitForImage(image, c);
-        BufferedImage bufferedImage =new BufferedImage(image.getWidth(c), image.getHeight(c), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(c), image.getHeight(c), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = bufferedImage.createGraphics();
         g2d.drawImage(image, 0, 0, c);
         return (bufferedImage);
     }
+
     public static boolean waitForImage(Image image, Component c) {
         MediaTracker tracker = new MediaTracker(c);
         tracker.addImage(image, 0);
-        try { tracker.waitForAll();} catch (InterruptedException ie) {}
+        try {
+            tracker.waitForAll();
+        } catch (InterruptedException ie) {
+        }
         return (!tracker.isErrorAny());
     }
 }
+
 ////////////////////////////////////////////////////////////////
 ////////////////DONT TOUCH THIS CLASS!!!! //////////////////////
 ////////////////////////////////////////////////////////////////
@@ -357,6 +367,7 @@ class GUI_loadPictureMenuItem_actionAdapter implements java.awt.event.ActionList
         adaptee.loadPictureMenuItem_actionPerformed(e);
     }
 }
+
 ////////////////////////////////////////////////////////////////
 ////////////////DONT TOUCH THIS CLASS!!!! //////////////////////
 ////////////////////////////////////////////////////////////////

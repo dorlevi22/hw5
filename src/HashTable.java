@@ -2,13 +2,13 @@ import java.util.LinkedList;
 
 public class HashTable {
 
+    // fields
     private int size; // represent the size of the table
-    //LinkedList[] table = new LinkedList[size];
     private LinkedList<ObjectWithCoordinates>[] table;
 
     // constructor
-    HashTable() {
-        this.size = 7;
+    public HashTable(int size) {
+        this.size = size;
         this.table = new LinkedList[size];
     }
 
@@ -17,14 +17,16 @@ public class HashTable {
     }
 
     public void insert(ObjectWithCoordinates object) {
+        // insert a new object to the hash table
         int i = hashFunc(object.getX(), object.getY());
         if (this.table[i] == null) { // if this cell is empty
-            this.table[i] = new LinkedList<ObjectWithCoordinates>();
+            this.table[i] = new LinkedList<>();
         }
         this.table[i].add(object); // add the new point to the right cell
     }
 
     public ObjectWithCoordinates search(int x, int y) {
+        // search the
         int index = hashFunc(x, y);
         ObjectWithCoordinates tmp;
         if (this.table[index] != null) {
