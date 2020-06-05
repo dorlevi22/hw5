@@ -4,7 +4,7 @@ public class HashTable {
 
     // fields
     private int size; // represent the size of the table
-    private LinkedList<ObjectWithCoordinates>[] table;
+    private LinkedList<ObjectWithCoordinates>[] table; // array of linked lists
 
     // constructor
     public HashTable(int size) {
@@ -26,7 +26,7 @@ public class HashTable {
     }
 
     public ObjectWithCoordinates search(int x, int y) {
-        // search the
+        // search the given x,y in the table
         int index = hashFunc(x, y);
         ObjectWithCoordinates tmp;
         if (this.table[index] != null) {
