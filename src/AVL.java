@@ -225,7 +225,8 @@ public class AVL<T> {
 
         AVLNode<T> tmp = pathA.getLast(); // hold the "a" node or his previous (if a not in the AVL tree)
         int common_ancestor = pathA.peekFirst().getKey();
-        // go up from tmp to the root and add necessary nodes to "allRange" list (the same way as pathA in reverse)
+
+        // go up from tmp(a or his previous) to the root and add necessary nodes to "allRange" list (the same way as pathA in reverse)
         while (tmp.getKey() != common_ancestor) {
             if (tmp.getKey() >= a) {
                 allRange.add(tmp.getData());
