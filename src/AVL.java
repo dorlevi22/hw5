@@ -12,7 +12,7 @@ public class AVL<T> {
     public void insert(int key, T data) {
         // insert a new item to the tree, sort by key with data in it
         AVLNode<T> node_to_insert = new AVLNode<>(key, data);
-        if (this.root == null) {
+        if (this.root == null) { // if tree is empty
             this.root = node_to_insert;
             this.root.setHeight(0);
             this.root.setFather(null);
@@ -44,22 +44,15 @@ public class AVL<T> {
     }
 
     private void update_height_and_fix(AVLNode<T> node, int key) {
-        /* This function go trough path from specific node to the root (by recursion), update the heights of the nodes and balances the tree if need to by rotations */
+        /* This function go trough path from a specific node to the root (by recursion), update the heights of the nodes and balances the tree if need to by rotations */
         if (node == null) { // if reached to the father of the root
             return;
         }
 
-        update_height(node);
-//        if (node.getRightChild() != null && node.getLeftChild() != null) {
-//            int rightChildHeight = node.getRightChild().getHeight(); // the height of the right child
-//            int leftChildHeight = node.getLeftChild().getHeight();  //  the height of the left  child
-//            node.setHeight(1 + Math.max(rightChildHeight, leftChildHeight));
-//        } else if (node.getRightChild() == null) {
-//            node.setHeight(1 + node.getLeftChild().getHeight());
-//        } else if (node.getLeftChild() == null) {
-//            node.setHeight(1 + node.getRightChild().getHeight());
-//        }
+        update_height(node); // update the height of the given node
+
         int balance;
+        // check difference between height from the left and the right
         if (node.getRightChild() == null && node.getLeftChild() == null)
             balance = 0;
         else if (node.getRightChild() == null && node.getLeftChild() != null)
@@ -69,6 +62,7 @@ public class AVL<T> {
         else // have 2 children
             balance = node.getLeftChild().getHeight() - node.getRightChild().getHeight();
 
+        // do rotations according to the balance
         // case 1
         if (balance > 1 && key < node.getLeftChild().getKey()) {
             right_rotate(node);
@@ -88,7 +82,7 @@ public class AVL<T> {
             left_rotate(node);
         }
 
-        update_height_and_fix(node.getFather(), key);
+        update_height_and_fix(node.getFather(), key); // do recursively all the way to the root
     }
 
     private void update_height(AVLNode<T> node) {
@@ -111,6 +105,8 @@ public class AVL<T> {
         // rotate
         k1.setRightChild(k2);
         k1.setFather(k2.getFather());
+
+        // if k2 is not the root, we need to update it's father also
         if (k2 != this.root) {
             if (k1.getFather().getKey() > k1.getKey())
                 k1.getFather().setLeftChild(k1);
@@ -119,9 +115,11 @@ public class AVL<T> {
         }
         k2.setFather(k1);
         k2.setLeftChild(temp);
+
         if (temp != null)
             temp.setFather(k2);
 
+        // if k2 was the root, update the field
         if (this.root == k2) {
             this.root = k1;
         }
@@ -138,6 +136,8 @@ public class AVL<T> {
         // rotate
         k1.setLeftChild(k2);
         k1.setFather(k2.getFather());
+
+        // if k2 is not the root, we need to update it's father also
         if (k2 != this.root) {
             if (k1.getFather().getKey() > k1.getKey())
                 k1.getFather().setLeftChild(k1);
@@ -149,6 +149,7 @@ public class AVL<T> {
         if (temp != null)
             temp.setFather(k2);
 
+        // if k2 was the root, update the field
         if (this.root == k2) {
             this.root = k1;
         }
@@ -186,7 +187,7 @@ public class AVL<T> {
             } else if (key < node.getKey()) {
                 list.add(node);
                 node = node.getLeftChild();
-            } else {
+            } else { // reached the key
                 list.add(node);
                 return;
             }

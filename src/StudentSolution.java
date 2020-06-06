@@ -1,9 +1,9 @@
 import java.util.LinkedList;
 
 public class StudentSolution implements MyInterface {
-    // fields
-    private AVL<Point> AVL_X = new AVL<>(); // tree sorted by X
-    private AVL<Point> AVL_Y = new AVL<>(); // tree sorted by Y
+
+    private AVL<Point> AVL_X = new AVL<>(); // tree that will hold points sorted by X
+    private AVL<Point> AVL_Y = new AVL<>(); // tree that will hold points sorted by Y
 
     public void insertDataFromDBFile(String objectName, int objectX, int objectY) {
         // create point and insert it to our 2 trees.
@@ -13,17 +13,23 @@ public class StudentSolution implements MyInterface {
     }
 
     public String[] firstSolution(int leftTopX, int leftTopY, int rightBottomX, int rightBottomY) {
+        // get the necessary points in the x,y range
         Object[] X_range = AVL_X.range(Math.min(rightBottomX, leftTopX), Math.max(rightBottomX, leftTopX));
         Object[] Y_range = AVL_Y.range(Math.min(rightBottomY, leftTopY), Math.max(rightBottomY, leftTopY));
-        LinkedList<Object> data = new LinkedList<>();
+
+        LinkedList<Object> data = new LinkedList<>(); // list that will hold the data that is in both ranges
+
+        // if one of them is empty there is no common data
         if (Y_range.length == 0 || X_range.length == 0)
             return new String[]{};
+
+        // put the Y range in hash-table
         HashTable map = new HashTable(Y_range.length);
 
         for (int i = 0; i < Y_range.length; i++) {
             map.insert((Point) Y_range[i]);
         }
-
+        // search for the X range points that are in the Y range
         for (int i = 0; i < X_range.length; i++) {
             if (map.search(((Point) X_range[i]).getX(), ((Point) X_range[i]).getY()) != null)
                 data.add(X_range[i]);
@@ -43,7 +49,7 @@ public class StudentSolution implements MyInterface {
         LinkedList<Object> data = new LinkedList<>();
 
         for (int i = 0; i < X_range.length; i++) {
-            // search every point from range X in range Y, binary search.
+            // search every point from range X in range Y, using binary search.
             if (binarySearch(Y_range, 0, Y_range.length - 1, X_range[i]) >= 0) {
                 // if the output is bigger than 0 -> the point exist in both ranges
                 data.add(X_range[i]);
@@ -68,8 +74,8 @@ public class StudentSolution implements MyInterface {
             if (range[mid].equals(p)) //==
                 return mid;
             if (((Point) range[mid]).getY() > ((Point) p).getY())
-                return binarySearch(range, l, mid - 1, p);
-            return binarySearch(range, mid + 1, r, p);
+                return binarySearch(range, l, mid - 1, p); // go left
+            return binarySearch(range, mid + 1, r, p); // go right
         }
         return -1;
     }
