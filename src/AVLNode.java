@@ -58,7 +58,6 @@ public class AVLNode<T> {
         this.height = height;
     }
 
-    @Override
     public String toString() {
 
         String s = "";

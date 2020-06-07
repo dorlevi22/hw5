@@ -47,12 +47,21 @@ public class StudentSolution implements MyInterface {
         Object[] X_range = AVL_X.range(Math.min(rightBottomX, leftTopX), Math.max(rightBottomX, leftTopX));
         Object[] Y_range = AVL_Y.range(Math.min(rightBottomY, leftTopY), Math.max(rightBottomY, leftTopY));
         LinkedList<Object> data = new LinkedList<>();
-
-        for (int i = 0; i < X_range.length; i++) {
-            // search every point from range X in range Y, using binary search.
-            if (binarySearch(Y_range, 0, Y_range.length - 1, X_range[i]) >= 0) {
-                // if the output is bigger than 0 -> the point exist in both ranges
-                data.add(X_range[i]);
+        if (X_range.length >= Y_range.length) {
+            for (int i = 0; i < X_range.length; i++) {
+                // search every point from range X in range Y, using binary search.
+                if (binarySearch(Y_range, 0, Y_range.length - 1, X_range[i], "Y") >= 0) {
+                    // if the output is bigger than 0 -> the point exist in both ranges
+                    data.add(X_range[i]);
+                }
+            }
+        } else {
+            for (int i = 0; i < Y_range.length; i++) {
+                // search every point from range Y in range X, using binary search.
+                if (binarySearch(X_range, 0, X_range.length - 1, Y_range[i], "X") >= 0) {
+                    // if the output is bigger than 0 -> the point exist in both ranges
+                    data.add(Y_range[i]);
+                }
             }
         }
         //convert the linked list to string array
@@ -63,7 +72,7 @@ public class StudentSolution implements MyInterface {
         return To_return;
     }
 
-    private int binarySearch(Object[] range, int l, int r, Object p) {
+    private int binarySearch(Object[] range, int l, int r, Object p, String XY) {
         if (r == l) {
             if (range[r].equals(p))
                 return r;
@@ -73,9 +82,15 @@ public class StudentSolution implements MyInterface {
             int mid = (l + r) / 2;
             if (range[mid].equals(p)) //==
                 return mid;
-            if (((Point) range[mid]).getY() > ((Point) p).getY())
-                return binarySearch(range, l, mid - 1, p); // go left
-            return binarySearch(range, mid + 1, r, p); // go right
+            // go right
+            if (XY.equals("Y")) {
+                if (((Point) range[mid]).getY() > ((Point) p).getY())
+                    return binarySearch(range, l, mid - 1, p, XY); // go left
+            } else {
+                if (((Point) range[mid]).getX() > ((Point) p).getX())
+                    return binarySearch(range, l, mid - 1, p,XY ); // go left
+            }
+            return binarySearch(range, mid + 1, r, p, XY); // go right
         }
         return -1;
     }
