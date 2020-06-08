@@ -38,7 +38,7 @@ public class StudentSolution implements MyInterface {
         //convert the linked list to string array
         String[] To_return = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {
-            To_return[i] = (String) ((Point) data.get(i)).getData();
+            To_return[i] = ((Point) data.get(i)).getData() + " X=" + ((Point) data.get(i)).getX() + " Y=" + ((Point) data.get(i)).getY();
         }
         return To_return;
     }
@@ -67,7 +67,7 @@ public class StudentSolution implements MyInterface {
         //convert the linked list to string array
         String[] To_return = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {
-            To_return[i] = (String) ((Point) data.get(i)).getData();
+            To_return[i] = ((Point) data.get(i)).getData() + " X=" + ((Point) data.get(i)).getX() + " Y=" + ((Point) data.get(i)).getY();
         }
         return To_return;
     }
@@ -88,7 +88,7 @@ public class StudentSolution implements MyInterface {
                     return binarySearch(range, l, mid - 1, p, XY); // go left
             } else {
                 if (((Point) range[mid]).getX() > ((Point) p).getX())
-                    return binarySearch(range, l, mid - 1, p,XY ); // go left
+                    return binarySearch(range, l, mid - 1, p, XY); // go left
             }
             return binarySearch(range, mid + 1, r, p, XY); // go right
         }
