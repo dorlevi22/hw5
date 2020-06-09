@@ -47,7 +47,7 @@ public class StudentSolution implements MyInterface {
         Object[] X_range = AVL_X.range(Math.min(rightBottomX, leftTopX), Math.max(rightBottomX, leftTopX));
         Object[] Y_range = AVL_Y.range(Math.min(rightBottomY, leftTopY), Math.max(rightBottomY, leftTopY));
         LinkedList<Object> data = new LinkedList<>();
-        if (X_range.length >= Y_range.length) {
+        if (X_range.length <= Y_range.length) { // go throw the shorter and search him in the longer
             for (int i = 0; i < X_range.length; i++) {
                 // search every point from range X in range Y, using binary search.
                 if (binarySearch(Y_range, 0, Y_range.length - 1, X_range[i], "Y") >= 0) {
