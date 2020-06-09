@@ -38,7 +38,7 @@ public class StudentSolution implements MyInterface {
         //convert the linked list to string array
         String[] To_return = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {
-            To_return[i] = ((Point) data.get(i)).getData() + " X=" + ((Point) data.get(i)).getX() + " Y=" + ((Point) data.get(i)).getY();
+            To_return[i] = data.get(i).toString();
         }
         return To_return;
     }
@@ -67,7 +67,7 @@ public class StudentSolution implements MyInterface {
         //convert the linked list to string array
         String[] To_return = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {
-            To_return[i] = ((Point) data.get(i)).getData() + " X=" + ((Point) data.get(i)).getX() + " Y=" + ((Point) data.get(i)).getY();
+            To_return[i] = data.get(i).toString();
         }
         return To_return;
     }

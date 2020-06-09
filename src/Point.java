@@ -25,6 +25,6 @@ public class Point implements ObjectWithCoordinates {
     }
 
     public String toString() {
-        return name;
+        return name + " X=" + this.getX() + " Y=" + this.getY();
     }
 }
